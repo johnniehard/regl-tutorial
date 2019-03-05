@@ -1,7 +1,9 @@
 import "./styles.css";
 import createREGL from "regl";
 
-const regl = createREGL();
+const regl = createREGL({
+  container: document.querySelector("#regl")
+});
 
 const drawTriangle = regl({
   vert: `
@@ -19,7 +21,7 @@ const drawTriangle = regl({
     precision mediump float;
     varying vec3 fcolor;
     void main() {
-      gl_FragColor = vec4(fcolor, 1);
+      gl_FragColor = vec4(sqrt(fcolor), 1);
     }
   `,
   attributes: {
@@ -27,7 +29,7 @@ const drawTriangle = regl({
     color: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
   },
   uniforms: {
-    scale: 0.25
+    scale: regl.prop("scale")
   },
   count: 3
 });
@@ -38,5 +40,7 @@ regl.frame(() => {
     depth: 1
   });
 
-  drawTriangle();
+  drawTriangle({
+    scale: +document.querySelector("#scale-input").value
+  });
 });
