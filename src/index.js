@@ -6,12 +6,13 @@ const regl = createREGL();
 const drawTriangle = regl({
   vert: `
     precision mediump float;
+    uniform float scale;
     attribute vec2 position;
     attribute vec3 color;
     varying vec3 fcolor;
     void main() {
       fcolor = color;
-      gl_Position = vec4(position, 0, 1);
+      gl_Position = vec4(scale * position, 0, 1);
     }
   `,
   frag: `
@@ -25,7 +26,9 @@ const drawTriangle = regl({
     position: [[1, 0], [0, 1], [-1, -1]],
     color: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
   },
-
+  uniforms: {
+    scale: 0.25
+  },
   count: 3
 });
 
