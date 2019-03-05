@@ -7,6 +7,6 @@ const regl = createREGL();
 
 regl.frame(() => {
   regl.clear({
-    color: [1, 0, 1, 1]
+    color: [1, 0.5 * (1.0 + Math.cos(Date.now() * 0.01)), 1, 1]
   });
 });
