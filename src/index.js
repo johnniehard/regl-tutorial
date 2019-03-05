@@ -2,18 +2,19 @@ import "./styles.css";
 import createREGL from "regl";
 
 const regl = createREGL({
-  container: document.querySelector("#regl")
+  // container: document.querySelector("#regl")
 });
 
 const drawTriangle = regl({
   vert: `
     precision mediump float;
-    uniform float scale;
+    uniform float tick;
     attribute vec2 position;
     attribute vec3 color;
     varying vec3 fcolor;
     void main() {
       fcolor = color;
+      float scale = cos(0.01 * tick);
       gl_Position = vec4(scale * position, 0, 1);
     }
   `,
@@ -29,7 +30,7 @@ const drawTriangle = regl({
     color: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
   },
   uniforms: {
-    scale: regl.prop("scale")
+    tick: regl.context("tick")
   },
   count: 3
 });
@@ -40,7 +41,5 @@ regl.frame(() => {
     depth: 1
   });
 
-  drawTriangle({
-    scale: +document.querySelector("#scale-input").value
-  });
+  drawTriangle();
 });
