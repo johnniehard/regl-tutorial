@@ -7,9 +7,10 @@ const drawTriangle = regl({
   vert: `
     precision mediump float;
     attribute vec2 position;
+    attribute vec3 color;
     varying vec3 fcolor;
     void main() {
-      fcolor = abs(vec3(position.x, 0, position.y));
+      fcolor = color;
       gl_Position = vec4(position, 0, 1);
     }
   `,
@@ -21,7 +22,8 @@ const drawTriangle = regl({
     }
   `,
   attributes: {
-    position: [[1, 0], [0, 1], [-1, -1]]
+    position: [[1, 0], [0, 1], [-1, -1]],
+    color: [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
   },
 
   count: 3
